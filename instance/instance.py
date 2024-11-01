@@ -4,6 +4,7 @@ import pulumi_aws as aws
 from .ami import AMI
 from .type import InstanceType
 import vpc.fan.vpc_components as fan_vpc
+import vpc.marketplace.vpc_components as marketplace_vpc
 
     
 class Instance:
@@ -72,9 +73,9 @@ class Instance:
         )
         
     
-    def only_ssh_instance(self, vpc: fan_vpc.VPCComponents):
+    def marketplace_only_ssh_instance(self, vpc: marketplace_vpc.VPCComponents):
         
-        subnet_name = vpc.subnets.SubnetEnum.fan_subnet_1.name
+        subnet_name = vpc.subnets.SubnetEnum.marketplace_subnet_1.name
         subnet_id = vpc.subnets.get_subnet(subnet_name).id
         
         self.only_ssh = self._instance(
