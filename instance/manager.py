@@ -2,8 +2,7 @@
 from .instance import Instance
 import pulumi_aws as aws
 from vpc import manager
-
-
+from instance.instance import InstanceType
 
 class InstanceManager:
     """Instance Class
@@ -43,10 +42,10 @@ class InstanceManager:
         
         # Current Instance List
         
-        #self.instance.fan_test2_instance(self.vpc.fan_vpc)
-        #self.instance.only_ssh_instance(self.vpc.fan_vpc)
-      #  self.instance.fan_test_instance(self.vpc.fan_vpc)
-       # self.instance.marketplace_only_ssh_instance(self.vpc.marketplace_vpc)
+        #self.instance.fan_test2_instance(InstanceType.t2_micro, self.vpc.fan_vpc)
+        #self.instance.only_ssh_instance(InstanceType.t2_micro, self.vpc.fan_vpc)
+       # self.instance.fan_test_instance(InstanceType.t2_micro, self.vpc.fan_vpc)
+       # self.instance.marketplace_only_ssh_instance(InstanceType.t2_micro, self.vpc.marketplace_vpc)
 
     def get_instance(self, instance_name: str):
         return self.instance_dict[instance_name]

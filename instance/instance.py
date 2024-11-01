@@ -37,7 +37,7 @@ class Instance:
         pulumi.export('instance_id', self.instance.id)
         
         
-    def fan_test_instance(self, vpc: fan_vpc.VPCComponents):
+    def fan_test_instance(self, instance_type: InstanceType, vpc: fan_vpc.VPCComponents):
         pulumi.export('fan_test_security_group_id', vpc.security_groups.default.id)
         subnet_name = vpc.subnets.SubnetEnum.fan_subnet_1.name
         subnet_id = vpc.subnets.get_subnet(subnet_name).id
@@ -46,7 +46,7 @@ class Instance:
             instance_name='fan_test',
             security_group_id=[vpc.security_groups.default.id], 
             ami_id=AMI.UBUNTU_24_04_X86_64.value,
-            instance_type=InstanceType.t2_micro.value,
+            instance_type=instance_type.value,
             subnet_id=subnet_id,
             tags={'Name': 'fan_test'},
             opts=pulumi.ResourceOptions(
@@ -55,7 +55,7 @@ class Instance:
         )
         
     
-    def fan_test2_instance(self, vpc: fan_vpc.VPCComponents):
+    def fan_test2_instance(self, instance_type: InstanceType, vpc: fan_vpc.VPCComponents):
         
         subnet_name = vpc.subnets.SubnetEnum.fan_subnet_1.name
         subnet_id = vpc.subnets.get_subnet(subnet_name).id
@@ -65,7 +65,7 @@ class Instance:
             security_group_id=[vpc.security_groups.default.id], 
             subnet_id=subnet_id,
             ami_id=AMI.UBUNTU_24_04_X86_64.value,
-            instance_type=InstanceType.t2_micro.value,
+            instance_type=instance_type.value,
             tags={'Name': 'fan_test2'},
             opts=pulumi.ResourceOptions(
                 provider=self.aws_provider,
@@ -73,7 +73,7 @@ class Instance:
         )
         
     
-    def marketplace_only_ssh_instance(self, vpc: marketplace_vpc.VPCComponents):
+    def marketplace_only_ssh_instance(self, instance_type: InstanceType, vpc: marketplace_vpc.VPCComponents):
         
         subnet_name = vpc.subnets.SubnetEnum.marketplace_subnet_1.name
         subnet_id = vpc.subnets.get_subnet(subnet_name).id
@@ -82,7 +82,7 @@ class Instance:
             instance_name='only_ssh', 
             security_group_id=[vpc.security_groups.only_ssh.id], 
             ami_id=AMI.UBUNTU_24_04_X86_64.value,
-            instance_type=InstanceType.t2_micro.value,
+            instance_type=instance_type.value,
             subnet_id=subnet_id,
             tags={'Name': 'only_ssh'},
             opts=pulumi.ResourceOptions(
